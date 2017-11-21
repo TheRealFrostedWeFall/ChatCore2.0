@@ -1,0 +1,153 @@
+#Thank you for using my ChatCore V2.0.4 1.12.2 Skript#
+#This has been recently updated for 1.12.2 compatibility#
+#Be sure to check out my other Skripts and Plugins below#
+#Just copy and paste the following links into your browser or search engine#
+#https://www.spigotmc.org/resources/%E2%98%85-basicbackpacks-%E2%98%85-the-best-working-backpacks-plugin-%E2%96%BA-constant-updates-%E2%97%84.47339/#
+#https://www.spigotmc.org/resources/playervaults-duplication-protect.45711/
+#https://www.spigotmc.org/resources/frostclearlag.46239/#
+#Thanks for reading, I hope you enjoy my plugin!#
+
+
+# Put any words you wish to block below.
+options:
+	BlockedWords: ".com" or ".net" or ".co" or ".us" or ".uk" or ".ws" or ".tk" or ".org" or ".to" or "dot." or "dot," or "(dot)"  or  ".192" or "dot" or ".aternos" or ".tech" or ".edu" or "DOT" or " , " or ".de" or ".tl" or ".nl" or ".be" or ".me" or ".info" or ".ly" or ".onion" or ".bit" or ".pl" or ".gl" or ".tv" or ".gs" or ".myserver" or ".club" or ".space" or ".design" or ".rent" or ".bid" or ".trade" or ".webcam" or ".press" or ".io" or ".ca" or ".college" or ".host" or ".es" or ".yoga" or ".financial" or ".flights" or ".guitars" or ".xyz" or ".dj" or ".is" or ".hub" or ".server" or ".webcam" or ".ninja" or ".financial" or ".ca" or ".eu" or ".esy"
+	Version: V 2.0.5 DEV BUILD
+	Warning: &7Clearing Entities In 
+command /clearchat:
+  permission: chatcore.clearchat
+  trigger:
+    broadcast "&7"
+    loop 150 times:
+      broadcast ""
+      broadcast ""
+    broadcast "&4Chat has been cleared by an administrator"
+    stop
+command /cc [<text>]:
+	permission: chatcore.admin.help
+	permission message: &cYou currently do not have the required permissions to execute this command. Please contact a server administrator if this is wrong! ChatCore.Admin.Help
+	trigger:
+		if arg 1 is not set:
+			send "&cIncorrect usage. Try, /cc help"
+		if arg 1 is "help":
+			send "&6Chat&7Core Mini Help 1:"
+			send "&8- &7/clearchat"
+			send "&8- &7/cc disable"
+			send "&8- &7/cc enable"
+			send "&8- &7/cc reload"
+			send "&8- &7/chatcore"
+			send "&8- &7/antiswear"
+			send "&8- &7/cc help2"
+		if arg 1 is "help2":
+			send "&6Chat&7Core Mini Help 2:"
+			send "&8- &7/cc ping"
+			send "&8- &7/cc help"
+			send "&8- &7/cc permissions"
+			send "&8- &7/antiad &aNew"
+		if arg 1 is "permissions":
+			send "&7                        &6&k;;&r   &e&lC H A T C O R E {@Version}  &6&k;;"
+			send "&8- &7ChatCore.Bypass"
+			send "&8- &7ChatCore.Admin"
+			send "&8- &7ChatCore.Bypass"
+			send "&8- &7ChatCore.Admin.Help"
+			send "&8- &7ChatCore.Clearchat"
+		if arg 1 is "disable":
+			set {chat} to false
+			broadcast "&cChat has been disabled by an administrator."
+		if arg 1 is "enable":
+			set {chat} to true
+			broadcast "&aChat has been enabled by an administator."
+		if arg 1 is "reload":
+			broadcast "&cChatCore {@Version} is reloading.."
+			make player execute command "/sk reload ChatCore"
+			wait 7 seconds
+			broadcast "&aChatCore {@Version} has succesfully reloaded!"
+			broadcast "&aPlease report any issues on the Spigot page!"
+		if arg 1 is "ping":
+			send "&cThis feature has been temporarily disabled by the developer"
+command /chatcore:
+	trigger:
+		send "&7                        &6&k;;&r   &e&lC H A T C O R E {@Version}  &6&k;;"
+		send "&7"
+		send "&7ChatCore ( Free ) is a feature heavy all in one chat control alternative skript developed entirely by &6FrostedWeFall&7!"
+		send "&7This server is running ChatCore {@Version}"
+		send "&7"
+command /antiswear:
+	trigger:
+		send "&cThis feature has been disabled by the developer and has been replaced with the Word Blocker."
+command /blockedwords:
+	trigger:
+		send "&7                        &6&k;;&r   &e&lB l o c k e d A d W o r d s  &6&k;;"
+		send ""
+		send "&9.com, .net, .co, .us, .uk, .ws, .tk, .org, .to, dot., dot, (dot), .192, dot, .aternos, .tech, .edu, DOT, .de, .tl, .nl, .be, .me, .info, .ly, .onion, .bit, .pl, .gl, .tv, .gs, .myserver, .club, .space, .design, .rent, .bid, .trade, .webcam, .press, .io, .ca, .college, .host, .es, .yoga, .financial, .flights, .guitars, .xyz, .dj , .is, .hub, .server, .webcam, .ninja, .financial, .ca, .eu, .esy"
+		send ""
+on command:
+	if command is "pl":
+		if player doesn't have permission "chatcore.admin":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "bukkit:pl":
+		if player doesn't have permission "chatcore.admin":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "plugins":
+		if player doesn't have permission "chatcore.admin":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+on chat:
+	if message contains {@BlockedWords}:
+		cancel event
+		make console execute command "/mute %player% 5m"
+		send "&7&m-------------------------"
+		send "&cPlease do not attempt to advertise"
+		send "&7&m-------------------------" 
+on chat:
+	if {chat} is false:
+		if player has permission "chatcore.bypass":
+			cancel event
+			broadcast "&9%player's displayname%&8: &f%message%"
+		else:
+			cancel event
+			send "&cChat has been disabled by an administrator&8!"
+	else:
+		cancel event
+		broadcast "&9%player's displayname%&8: &f%message%"
+
+
+# Experimental Commands + Disabled commands will go below here ( Idea from SimpleChat Skript ) #
+
+command /clearmychat:
+	permission: chatcore.clearmychat
+	trigger:
+		loop 150 times:
+			message ""
+			message "&aYour Chat has been cleared"
+
+every 10 minutes:
+	broadcast "{@Warning} &c1 &7Minute!"
+	wait 57 seconds
+	broadcast "{@Warning} &c3 &7Seconds!"
+	wait 1 seconds
+	broadcast "{@Warning} &c2 &7Seconds!"
+	wait 1 seconds
+	broadcast "{@Warning} &c1 &7Seconds!"
+	wait 1 seconds
+	make server execute command "/lagg clear"
+
+command /lagg [<text>] [<integer>]:
+	trigger:
+		if player has permission "chatcore.clearentities":
+			if arg 1 is "clear":
+				clear {_count}
+				loop all arrows:
+					clear loop-entity
+					add 1 to {_count}
+				loop entities:
+					loop-entity is a dropped item
+					clear loop-entity
+					add 1 to {_count}
+				if {_count} is not set:
+					set {_count} to 0
+				broadcast "&c%{_count}% &7entities have been removed from the server!"
+
+
+# Find that here https://www.spigotmc.org/resources/simplechat-chat-formatter-antiswear-and-more-skript-1-7-1-12.9998/ #
